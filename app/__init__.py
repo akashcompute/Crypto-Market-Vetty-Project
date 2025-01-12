@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flasgger import Swagger
 from app.routes import api_bp
 from app.config import Config
@@ -13,6 +13,12 @@ def create_app():
     app.config.from_object(Config)
 
     auth = HTTPBasicAuth()
+
+    @auth.error_handler
+    def unauthorized():
+        response = jsonify({"message": "User not authorized"})
+        response.status_code = 401
+        return response
 
     @auth.verify_password
     def verify_password(username, password):
