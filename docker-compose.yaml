@@ -1,0 +1,16 @@
+version: '1.4'
+
+services:
+  flask-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: crypto-vetty-project-flask-app:v1.4
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+    volumes:
+      - .:/app # Mount the current directory to the /app directory in the container
+    command: flask run --host=0.0.0.0 --port=5000
