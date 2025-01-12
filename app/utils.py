@@ -1,52 +1,46 @@
 import requests
 import pkg_resources
 import logging
-
-
-BASE_URL = "https://api.coingecko.com/api/v3"
+from app.config import Config as config
 
 
 def fetch_coin_by_id(coin_id):
     """
     Fetch details about a specific coin.
     """
-    url = f"{BASE_URL}/coins/{coin_id}"
+    url = f"{config.BASE_URL}/{config.COINS_ENDPOINT}/{coin_id}"
     params = {"localization": "false"}
     response = requests.get(url, params=params)
     response.raise_for_status()
     return response.json()
 
+
 def fetch_categories():
     """
     Fetch all cryptocurrency categories.
     """
-    url = f"{BASE_URL}/coins/categories"
+    url = (f"{config.BASE_URL}/{config.COINS_ENDPOINT}"
+           f"/{config.COINS_ENDPOINT_CATEGORIES}")
     response = requests.get(url)
     response.raise_for_status()
     return response.json()
+
 
 def fetch_coins(page_num=1, per_page=10):
     """
     Fetch a paginated list of coins with market data in CAD.
     """
-    url = f"{BASE_URL}/coins/markets"
+    url = (f"{config.BASE_URL}/{config.COINS_ENDPOINT}"
+           f"/{config.COINS_ENDPOINT_MARKETS}")
     params = {"vs_currency": "cad", "page": page_num, "per_page": per_page}
     response = requests.get(url, params=params)
     response.raise_for_status()
     return response.json()
 
+
 # Get the versions of the third-party libraries used in the application
 def get_library_versions():
-    libraries = [
-    "Flask",
-    "Flasgger",
-    "requests",
-    "Werkzeug",
-    "flake8",
-    "Jinja2",
-    "PyYAML",
-    "jsonschema"
-]
+    libraries = config.LIBRARIES
     versions = {}
 
     for library in libraries:
