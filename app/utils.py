@@ -56,7 +56,8 @@ def get_library_versions():
 # Set up logging configuration
 def setup_logging():
     """ Set up basic logging configuration. """
-    logging.basicConfig(level=logging.INFO,
+    logging.basicConfig(level=config.LOG_LEVEL,
+                        filename=config.LOG_FILE,
                         format='%(asctime)s - %(levelname)s - %(message)s')
     logging.info("Logging setup complete.")
 

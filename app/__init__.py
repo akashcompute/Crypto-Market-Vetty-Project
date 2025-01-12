@@ -2,6 +2,8 @@ from flask import Flask
 from flasgger import Swagger
 from app.routes import api_bp
 from app.config import Config
+from flask_httpauth import HTTPBasicAuth
+from werkzeug.security import check_password_hash
 
 
 def create_app():
@@ -9,6 +11,21 @@ def create_app():
     app = Flask(__name__)
 
     app.config.from_object(Config)
+
+    auth = HTTPBasicAuth()
+
+    @auth.verify_password
+    def verify_password(username, password):
+        if (username in app.config["ALLOWED_USERS"] and
+                check_password_hash(app.config["PASSWORD"][username],
+                                    password)):
+            return username
+
+    # Authentication applied to all API routes
+    @app.before_request
+    @auth.login_required
+    def before_request():
+        pass  # Authentication is handled by `verify_password`
 
     # Initialize Swagger with the Flask app
     Swagger(app, template_file=app.config['SWAGGER_YAML'])
