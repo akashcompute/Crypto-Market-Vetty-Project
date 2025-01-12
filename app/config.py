@@ -6,6 +6,7 @@ class Config:
     """
     Configuration settings for the Flask application.
     """
+    FLASK_DEBUG = os.getenv("FLASK_DEBUG", True)
 
     # Defined hashed password and username
     ALLOWED_USERS = ["admin", "dummy"]
