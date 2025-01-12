@@ -1,8 +1,12 @@
-from flask import Flask, jsonify, request
+from flask import Flask
+from flasgger import Swagger
+from routes import api_bp
 
-from utils import *
-
+# Create the Flask application instance
 app = Flask(__name__)
+
+# Initialize Swagger with the Flask app
+swagger = Swagger(app)
 
 # Define the root endpoint that lists all available API endpoints
 @app.route('/')
@@ -29,4 +33,4 @@ def apis_available():
 app.register_blueprint(api_bp, url_prefix='/api/v1')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
