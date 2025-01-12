@@ -1,11 +1,11 @@
-version: '1.2'
+version: '1.4'
 
 services:
   flask-app:
     build:
       context: .
       dockerfile: Dockerfile
-    image: crypto-vetty-project-flask-app:v1.2
+    image: crypto-vetty-project-flask-app:v1.4
     ports:
       - "5000:5000"
     environment:

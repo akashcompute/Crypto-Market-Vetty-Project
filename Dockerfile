@@ -5,6 +5,7 @@ LABEL authors="akash.kumar"
 WORKDIR /app
 ENV FLASK_ENV=development
 ENV FLASK_APP=main.py
+ENV FLASK_DEBUG=1
 
 # Copy requirements and install dependencies
 COPY requirements.txt .

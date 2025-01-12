@@ -28,6 +28,7 @@ class Config:
 
     # Application settings
     PORT = os.getenv("PORT", 5000)
+    FLASK_RUN_HOST = os.getenv("FLASK_RUN_HOST", '0.0.0.0')
     APP_VERSION = {"version": "1.0.0"}
 
     # Endpoints
