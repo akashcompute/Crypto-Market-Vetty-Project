@@ -72,7 +72,7 @@ def get_coin_by_id(coin_id):
                          'Coin not found')
             return jsonify({"error": "Coin not found"}), 404
         log_api_call(f'/{config.COINS_ENDPOINT}/{coin_id}',
-                 config.REQUEST_GET, config.SUCCESS_RESPONSE, coin_data)
+                    config.REQUEST_GET, config.SUCCESS_RESPONSE, coin_data)
         return jsonify(coin_data)
     except Exception as e:
         log_api_call(f'/{config.COINS_ENDPOINT}/{coin_id}',
