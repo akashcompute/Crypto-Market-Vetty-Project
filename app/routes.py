@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from utils import *  # Assuming this contains the functions to fetch data from a source (e.g., database, API)
+from app.utils import *
 
 # Define a Blueprint for the API. The first argument ('api') is the name of the blueprint,
 # and the second argument (__name__) is the current module.
@@ -17,11 +17,15 @@ def health_check():
 # Version Endpoint: This route returns the current version of the application.
 @api_bp.route('/version', methods=['GET'])
 def version():
-    """
-    Get the application version
-    """
-    # Returns the current version in a JSON response
-    return jsonify({"version": "1.0.0"}), 200
+    app_version = {"version": "1.0.0"}
+
+    libraries_versions = get_library_versions()
+
+    return jsonify({
+        "app_version": app_version,
+        "libraries_versions": libraries_versions
+    }), 200
+
 
 # Coin Details Endpoint: This route fetches coin details by coin_id.
 @api_bp.route('/coins/<string:coin_id>', methods=['GET'])

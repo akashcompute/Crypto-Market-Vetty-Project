@@ -4,7 +4,7 @@ info:
   description: "API to interact with cryptocurrency market data."
   version: "1.0.0"
 paths:
-  /version:
+  /api/v1/version:
     get:
       summary: "Get the application version"
       responses:
@@ -16,7 +16,7 @@ paths:
               version:
                 type: string
                 example: '1.0.0'
-  /health:
+  /api/v1/health:
     get:
       summary: "Health check endpoint"
       responses:
@@ -31,7 +31,7 @@ paths:
               message:
                 type: string
                 example: 'The application is running!'
-  /coins/{coin_id}:
+  /api/v1/coins/{coin_id}:
     get:
       summary: "Fetch details about a specific coin"
       parameters:
@@ -126,7 +126,7 @@ paths:
                 example: 22697209507
         404:
           description: "Coin not found"
-  /categories:
+  /api/v1/categories:
     get:
       summary: "List all cryptocurrency categories"
       responses:
@@ -168,7 +168,7 @@ paths:
                 volume_24h:
                   type: number
                   example: 37479567995.60404
-  /coins:
+  /api/v1/coins:
     get:
       summary: "List all cryptocurrencies with pagination"
       parameters:

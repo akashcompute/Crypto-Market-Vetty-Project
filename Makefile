@@ -1,7 +1,7 @@
 # Variables
 PYTHON := python3
 PIP := pip3
-APP := app.py
+APP := main.py
 ENV := .env
 
 venv:
