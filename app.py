@@ -6,7 +6,7 @@ from routes import api_bp
 app = Flask(__name__)
 
 # Initialize Swagger with the Flask app
-swagger = Swagger(app)
+swagger = Swagger(app, template_file='swagger.yaml')
 
 # Define the root endpoint that lists all available API endpoints
 @app.route('/')

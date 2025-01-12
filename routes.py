@@ -9,11 +9,7 @@ api_bp = Blueprint('api', __name__)
 @api_bp.route('/health', methods=['GET'])
 def health_check():
     """
-    Health check endpoint
-    ---
-    responses:
-      200:
-        description: Application health status
+    Health check endpoint to check if the application is running
     """
     # Returns a JSON response with status and a message
     return jsonify({"status": "healthy", "message": "The application is running!"}), 200
@@ -23,10 +19,6 @@ def health_check():
 def version():
     """
     Get the application version
-    ---
-    responses:
-      200:
-        description: The current version of the application
     """
     # Returns the current version in a JSON response
     return jsonify({"version": "1.0.0"}), 200
@@ -35,23 +27,7 @@ def version():
 @api_bp.route('/coins/<string:coin_id>', methods=['GET'])
 def get_coin_by_id(coin_id):
     """
-    Fetch details about a specific coin
-    ---
-    parameters:
-      - name: coin_id
-        in: path
-        type: string
-        required: true
-        description: The coin's ID (e.g., bitcoin)
-    responses:
-      200:
-        description: Details of the specified coin
-        schema:
-          type: object
-          properties:
-            coin_id:
-              type: string
-              description: The ID of the coin
+    Fetch details about a specific coin by its ID
     """
     # Fetch coin data based on the coin_id
     coin_data = fetch_coin_by_id(coin_id)  # Assuming a function that fetches coin data
@@ -62,10 +38,6 @@ def get_coin_by_id(coin_id):
 def get_categories():
     """
     List all cryptocurrency categories
-    ---
-    responses:
-      200:
-        description: A list of cryptocurrency categories
     """
     # Fetch and return a list of categories in JSON format
     categories = fetch_categories()  # Assuming a function that fetches categories
@@ -76,34 +48,6 @@ def get_categories():
 def get_coins():
     """
     List all cryptocurrencies with pagination
-    ---
-    parameters:
-      - name: page_num
-        in: query
-        type: integer
-        default: 1
-        description: The page number for pagination
-      - name: per_page
-        in: query
-        type: integer
-        default: 10
-        description: The number of coins to return per page
-    responses:
-      200:
-        description: A list of cryptocurrencies
-        schema:
-          type: array
-          items:
-            type: object
-            properties:
-              coin_id:
-                type: string
-                description: Coin identifier
-              name:
-                type: string
-                description: Coin name
-      400:
-        description: Invalid input
     """
     # Fetch pagination parameters from the query string (default values: page 1, per page 10)
     page_num = int(request.args.get('page_num', 1))
