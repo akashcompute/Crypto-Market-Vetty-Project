@@ -4,6 +4,7 @@ from utils import *
 
 app = Flask(__name__)
 
+# Define the root endpoint that lists all available API endpoints
 @app.route('/')
 def apis_available():
     return '''
@@ -14,40 +15,18 @@ def apis_available():
         <body>
             <h1>APIs available:</h1>
             <ul>
-                <li><a href="/version">/version</a></li>
-                <li><a href="/health">/health</a></li>
-                <li><a href="/coins/bitcoin">/coins/&lt;coin_id&gt;</a>eg: bitcoin</li>
-                <li><a href="/categories">/categories</a></li>
-                <li><a href="/coins">/coins</a></li>
+                <li><a href="/api/v1/version">/api/v1/version</a></li>  <!-- Version information -->
+                <li><a href="/api/v1/health">/api/v1/health</a></li>    <!-- Health check -->
+                <li><a href="/api/v1/categories">/api/v1/categories</a></li>  <!-- List of categories -->
+                <li><a href="/api/v1/coins/bitcoin">/api/v1/coins/&lt;coin_id&gt;</a> eg: bitcoin</li> <!-- Coin details by ID -->
+                <li><a href="/api/v1/coins">/api/v1/coins</a></li>  <!-- List of coins (with pagination) -->
+                <li><a href="/apidocs">/apidocs</a></li>  <!-- Swagger UI -->
             </ul>
         </body>
     </html>
     '''
 
-@app.route('/version', methods=['GET'])
-def version():
-    return jsonify({"version": "1.0.0"}), 200
-
-@app.route('/health', methods=['GET'])
-def health_check():
-    return jsonify({"status": "healthy", "message": "The application is running!"}), 200
-
-@app.route('/coins/<string:coin_id>', methods=['GET'])
-def get_coin_by_id(coin_id):
-    coin_data = fetch_coin_by_id(coin_id)
-    return jsonify(coin_data)
-
-@app.route('/categories', methods=['GET'])
-def get_categories():
-    categories = fetch_categories()
-    return jsonify(categories)
-
-@app.route('/coins', methods=['GET'])
-def get_coins():
-    page_num = int(request.args.get('page_num', 1))
-    per_page = int(request.args.get('per_page', 10))
-    coins = fetch_coins(page_num, per_page)
-    return jsonify(coins)
+app.register_blueprint(api_bp, url_prefix='/api/v1')
 
 if __name__ == '__main__':
     app.run(debug=True)
