@@ -64,15 +64,21 @@ def get_coin_by_id(coin_id):
     # Fetch coin data based on the coin_id
     log_api_call(f'/{config.COINS_ENDPOINT}/{coin_id}',
                  config.REQUEST_GET, 'STARTED')
-    coin_data = fetch_coin_by_id(coin_id)
-    if coin_data is None:
-        log_api_call(f'/{config.COINS_ENDPOINT}/{coin_id} '
-                     f'{config.REQUEST_GET}', config.ERROR_RESPONSE,
-                     'Coin not found')
-        return jsonify({"error": "Coin not found"}), 404
-    log_api_call(f'/{config.COINS_ENDPOINT}/{coin_id}',
+    try:
+        coin_data = fetch_coin_by_id(coin_id)
+        if coin_data is None:
+            log_api_call(f'/{config.COINS_ENDPOINT}/{coin_id} '
+                         f'{config.REQUEST_GET}', config.ERROR_RESPONSE,
+                         'Coin not found')
+            return jsonify({"error": "Coin not found"}), 404
+        log_api_call(f'/{config.COINS_ENDPOINT}/{coin_id}',
                  config.REQUEST_GET, config.SUCCESS_RESPONSE, coin_data)
-    return jsonify(coin_data)
+        return jsonify(coin_data)
+    except Exception as e:
+        log_api_call(f'/{config.COINS_ENDPOINT}/{coin_id}',
+                     config.REQUEST_GET, config.ERROR_RESPONSE, str(e))
+        return jsonify({"status": "error", "message": str(e),
+                        "status_code": 500}), 500
 
 
 # Categories Endpoint: This route returns a list of available categories.

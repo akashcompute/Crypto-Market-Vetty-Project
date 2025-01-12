@@ -3,7 +3,7 @@ COMPOSE_FILE = docker-compose.yaml
 PYTHON := python3
 PIP := pip3
 APP := main.py
-ENV := .env
+ENV := .venv
 
 venv:
 	@echo "Creating virtual environment..."
@@ -21,6 +21,10 @@ run:
 lint:
 	@echo "Running flake8 for linting..."
 	flake8 app
+
+test:
+	@echo "Running tests with pytest..."
+	$(PYTHON) -m unittest discover -s tests
 
 logs:
 	docker-compose -f $(COMPOSE_FILE) logs -f
@@ -43,6 +47,7 @@ help:
 	@echo "  install     Install dependencies from requirements.txt"
 	@echo "  run         Run the Flask application"
 	@echo "  lint        Run flake8 for code linting"
+	@echo "  test        Run tests using unittest"
 	@echo "  make build        - Build the Docker image"
 	@echo "  make up           - Run the application"
 	@echo "  make stop         - Stop the running containers"

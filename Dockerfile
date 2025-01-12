@@ -4,7 +4,6 @@ LABEL authors="akash.kumar"
 # Set the working directory in the container
 WORKDIR /app
 ENV FLASK_ENV=development
-ENV FLASK_APP=main.py
 ENV FLASK_DEBUG=1
 
 # Copy requirements and install dependencies
